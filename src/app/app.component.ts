@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'front-friends';
+  // tslint:disable-next-line:quotemark
+  title = "Friends's Circle";
 }
