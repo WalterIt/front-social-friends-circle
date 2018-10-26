@@ -15,18 +15,18 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthService } from './shared/services/auth.service';
 import { LoginComponent } from './login/login.component';
+import { AddEntryComponent } from './add-entry/add-entry.component';
 import { SocialFeedComponent } from './social-feed/social-feed.component';
-// import { AddEntryComponent } from './add-entry/add-entry.component';
-import { SinglePostComponent } from './single-post/single-post.component';
-import { UsersFriendsComponent } from './users-friends/users-friends.component';
+// import { SinglePostComponent } from './single-post/single-post.component';
+// import { UsersFriendsComponent } from './users-friends/users-friends.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    // SocialFeedComponent
-    // AddEntryComponent
+    SocialFeedComponent,
+    AddEntryComponent
   //  SinglePostComponent,
   //  UsersFriendsComponent
   ],
