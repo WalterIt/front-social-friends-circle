@@ -10,10 +10,11 @@ import { MatInputModule, MatFormFieldModule, MatIconModule, MatCardModule, MatBu
 
 import { ApprRoutingModule } from './appr-routing.module';
 
+import { AuthService } from './shared/services/auth.service';
+import { NetworkService } from './shared/services/network.service';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthService } from './shared/services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { AddEntryComponent } from './add-entry/add-entry.component';
 import { SocialFeedComponent } from './social-feed/social-feed.component';
@@ -43,7 +44,7 @@ import { SocialFeedComponent } from './social-feed/social-feed.component';
     MatButtonModule,
     NgbModule.forRoot()
   ],
-  providers: [AuthService],
+  providers: [AuthService, NetworkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
