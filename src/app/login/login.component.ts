@@ -24,9 +24,8 @@ export class LoginComponent implements OnInit {
   async login() {
     await this._auth.login(this.model);
 
-    alert('GOING TO FEED ...');
-
-    // this._router.navigate(['feed']);
+    // alert('GOING TO FEED ...');
+     this._router.navigate(['feed']);
   }
 
 }

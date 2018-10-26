@@ -14,7 +14,7 @@ export class SocialFeedComponent implements OnInit {
   currentUser : User;
 
   constructor(
-    private _auth : AuthService
+    private _auth: AuthService
   ) { }
 
   async ngOnInit() {
