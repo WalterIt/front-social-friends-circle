@@ -10,4 +10,8 @@ export class User {
         this.email = email;
         this.password = password;
     }
+
+    get fullName() {
+      return this.firstName + ' ' + this.lastName;
+    }
 }

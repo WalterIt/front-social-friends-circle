@@ -4,34 +4,25 @@
           <div class="hero-background"></div>
           <div class="col-lg-8 offset-2 d-flex flex-column">
               <div class="top-text-small">
-                  <a routerLink='/login' class="logo-text">
-                      <mat-icon class="mirror-horizontal va-sub">trending_flat</mat-icon>
-
-                      BACK TO LOGIN</a>
+                  <a routerLink="/register" class="logo-text">
+                    REGISTER
+                  </a>
               </div>
               <form class="register-form margin-v-auto">
                   <fieldset>
-                      <legend>Register</legend>
-
-                      <mat-form-field >
-                          <input matInput placeholder="First name" [(ngModel)]="model.firstName" name="firstName">
-                      </mat-form-field>
-
-                      <mat-form-field >
-                          <input matInput placeholder="Last name" [(ngModel)]="model.lastName" name="lastName">
-                      </mat-form-field>
+                      <legend>Login</legend>
 
                       <mat-form-field >
                           <input matInput placeholder="E-mail" [(ngModel)]="model.email" name="email">
                       </mat-form-field>
 
-                      <mat-form-field >
+                      <mat-form-field>
                         <input matInput placeholder="Password" [(ngModel)]="model.password" name="password" type="password">
                       </mat-form-field>
 
                       <div class="row align-items-center">
                           <div class="col text-right">
-                              <button type="submit" class="btn btn-primary" (click)="submitHandler()">Register</button>
+                              <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
                           </div>
                       </div>
 
