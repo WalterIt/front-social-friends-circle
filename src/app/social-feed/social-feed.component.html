@@ -1,23 +1,30 @@
 <div class="row no-gutters vh-100">
   <div class="col form-wrapper d-flex flex-column">
-      <div class="row h-100">
+      <div class="row h-100 overflow-auto">
           <div class="hero-background"></div>
           <div class="col-lg-8 offset-2 d-flex flex-column">
-
-              <div class="row mt-4" *ngIf="currentUser">
+              <div class="top-text-small">
+                  <a routerLink='/users' class="btn btn-warning">
+                    USERS & FRIENDS
+                  </a>
+              </div>
+              <div class="row mt-4 pb-2" *ngIf="currentUser">
                 <div class="col">
                   Logged in as: {{currentUser.fullName}}
                 </div>
               </div>
-              <div class="top-text-small">
-                  <div class="logo-text">
+              <div class="row mt-4" *ngIf="currentUser">
+                <div class="col">
+                  <button class="btn btn-secondary cursor-pointer" (click)="logout()">LOGOUT</button>
+                </div>
+              </div>
+              <div class="top-text-small mt-4">
+                  <div class="logo-text mt-4">
                     SOCIAL FEED
                   </div>
               </div>
-
-              <!-- <app-add-entry [(onClick)]="addEntry()"></app-add-entry> -->
-              <app-add-entry [(onClick)]="addEntry"></app-add-entry>
-              <app-single-post *ngFor="let post of posts" [post]="post" ></app-single-post>
+              <app-add-entry [onClick]="addEntry" class="mt-4"></app-add-entry>
+              <app-single-post *ngFor="let post of posts" [post]="post"></app-single-post>
           </div>
       </div>
   </div>

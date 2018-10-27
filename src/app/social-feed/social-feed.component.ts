@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/services/auth.service';
 import { User } from '../shared/entities/User';
 import { NetworkService } from '../shared/services/network.service';
 import { Post } from '../shared/entities/Posts';
-
-
-
 
 @Component({
   selector: 'app-social-feed',
@@ -14,12 +12,13 @@ import { Post } from '../shared/entities/Posts';
   styleUrls: ['./social-feed.component.css']
 })
 export class SocialFeedComponent implements OnInit {
-  currentUser: User;
-  posts: Post[];
+  currentUser : User;
+  posts : Post[];
 
   constructor(
-    private _auth: AuthService,
-    private network: NetworkService
+    private _auth : AuthService,
+    private _network : NetworkService,
+    private _router : Router
   ) { }
 
   async ngOnInit() {
@@ -29,11 +28,23 @@ export class SocialFeedComponent implements OnInit {
 
     this.posts = await this.getPosts();
 
-    this.addEntry = this.addEntry.bind(this); // to bind the content of this entry
+    this.addEntry = this.addEntry.bind(this);
+  }
+
+  async addEntry(entry) {
+    const response = await this._network.request('post', 'posts', {
+      body: entry
+    });
+
+    this.posts.unshift(new Post({
+      authorId: response['author_id'],
+      content: response['content'],
+      createdAt: response['created_at']
+    }));
   }
 
   async getPosts() {
-    const response =  await this.network.request('get', 'posts') as Array<any>;
+    const response = await this._network.request('get', 'posts') as Array<any>;
 
     return response.map(item => new Post({
       authorId: item.author_id,
@@ -42,16 +53,7 @@ export class SocialFeedComponent implements OnInit {
     }));
   }
 
-  async addEntry(entry) {
-    const response = await this.network.request('post', 'posts', {
-      body: {content: entry.content}
-    });
-    // alert(entry.content);
-    this.posts.push(new Post({
-      authorId: response['author_id'],
-      content: response['content'],
-      createdAt: response['created_at']
-    }));
+  async logout() {
+    this._auth.logout();
   }
-
 }

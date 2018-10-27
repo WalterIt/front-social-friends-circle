@@ -1,23 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from '../entities/User';
 
-const URL = 'http://192.168.99.100/api/';
+const BACKEND_DOMAIN = 'http://192.168.99.100';
 const DEFAULT_TOKEN_STORAGE_KEY = 'AUTH_TOKEN';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
+  public currentUser : User;
 
-  public currentUser: User;
-  private cachedToken;
+  private _cachedToken;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private _http : HttpClient,
+    private _router : Router
+  ) { }
 
-  register(user: User) {
-    return this.http.post(this.buildURL('auth/register'), {
+  register(user : User) {
+    return this._http.post(this.buildURL('/api/auth/register'), {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -25,9 +27,9 @@ export class AuthService {
     }).toPromise();
   }
 
-  async login(user: User) {
+  async login(user : User) {
     try {
-      const response = await this.http.post(this.buildURL('auth/login'), {
+      const response = await this._http.post(this.buildURL('/api/auth/login'), {
         email: user.email,
         password: user.password
       }).toPromise();
@@ -39,8 +41,8 @@ export class AuthService {
       }
 
       this.token = accessToken;
-      return true;
 
+      return true;
     } catch (error) {
       return false;
     }
@@ -48,7 +50,7 @@ export class AuthService {
 
   async fetchCurrentUserInfo() {
     try {
-      const response = await this.http.get(this.buildURL('auth/me'), {
+      const response = await this._http.get(this.buildURL('/api/auth/me'), {
         headers: {
           Authorization: `Bearer ${this.token}`
         }
@@ -57,32 +59,34 @@ export class AuthService {
       this.currentUser = new User(
         response['firstName'],
         response['lastName'],
-        response['email']
+        response['email'],
+        null,
+        response['id']
       );
 
       return this.currentUser;
-
     } catch (error) {
-      throw error;
+      console.error('error', error);
+      this._router.navigate(['login']);
     }
   }
 
   get token() {
-    if (this.cachedToken) {
-      return this.cachedToken;
+    if (this._cachedToken) {
+      return this._cachedToken;
     }
 
     const tokenFromStorage = localStorage.getItem(DEFAULT_TOKEN_STORAGE_KEY);
 
     if (tokenFromStorage) {
-      this.cachedToken = tokenFromStorage;
+      this._cachedToken = tokenFromStorage;
 
       return tokenFromStorage;
     }
   }
 
   set token(value) {
-    this.cachedToken = value;
+    this._cachedToken = value;
 
     if (value) {
       localStorage.setItem(DEFAULT_TOKEN_STORAGE_KEY, value);
@@ -91,7 +95,13 @@ export class AuthService {
     }
   }
 
-    buildURL(path) {
-      return URL + path;
-    }
+  buildURL(path) {
+    return BACKEND_DOMAIN + path;
+  }
+
+  logout() {
+    this.token = null;
+
+    this._router.navigate(['login']);
+  }
 }

@@ -46,7 +46,7 @@ export class UsersFriendsComponent implements OnInit {
       );
   }
 
-  async addFriend(user : User) {
+  async addFriend(user: User) {
     const response = await this._network.request(
       'post', `users/${user.id}/add_friend`
     ) as Array<any>;
