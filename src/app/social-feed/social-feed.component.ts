@@ -28,6 +28,8 @@ export class SocialFeedComponent implements OnInit {
     this.currentUser = currentUser;
 
     this.posts = await this.getPosts();
+
+    this.addEntry = this.addEntry.bind(this); // to bind the content of this entry
   }
 
   async getPosts() {
@@ -40,8 +42,16 @@ export class SocialFeedComponent implements OnInit {
     }));
   }
 
-  addEntry(entry) {
-    alert(entry.content);
+  async addEntry(entry) {
+    const response = await this.network.request('post', 'posts', {
+      body: {content: entry.content}
+    });
+    // alert(entry.content);
+    this.posts.push(new Post({
+      authorId: response['auth_id'],
+      content: response['content'],
+      createdAt: response['created_at']
+    }));
   }
 
 }

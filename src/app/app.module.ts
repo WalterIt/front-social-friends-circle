@@ -18,7 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AddEntryComponent } from './add-entry/add-entry.component';
 import { SocialFeedComponent } from './social-feed/social-feed.component';
-// import { SinglePostComponent } from './single-post/single-post.component';
+import { SinglePostComponent } from './single-post/single-post.component';
 // import { UsersFriendsComponent } from './users-friends/users-friends.component';
 
 @NgModule({
@@ -27,8 +27,8 @@ import { SocialFeedComponent } from './social-feed/social-feed.component';
     RegisterComponent,
     LoginComponent,
     SocialFeedComponent,
-    AddEntryComponent
-  //  SinglePostComponent,
+    AddEntryComponent,
+    SinglePostComponent
   //  UsersFriendsComponent
   ],
   imports: [

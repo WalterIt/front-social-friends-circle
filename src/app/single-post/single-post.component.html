@@ -1,3 +1,12 @@
-<p>
-  single-post works!
-</p>
+<mat-card class="social-feed-card mt-4">
+  <mat-card-header>
+    <div mat-card-avatar class="social-feed-avatar">
+      <mat-icon>face</mat-icon>
+    </div>
+    <mat-card-title *ngIf="author">{{author.fullName}}</mat-card-title>
+    <mat-card-subtitle>{{timePassed}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{post.content}}</p>
+  </mat-card-content>
+</mat-card>
