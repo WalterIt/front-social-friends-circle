@@ -19,7 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { AddEntryComponent } from './add-entry/add-entry.component';
 import { SocialFeedComponent } from './social-feed/social-feed.component';
 import { SinglePostComponent } from './single-post/single-post.component';
-// import { UsersFriendsComponent } from './users-friends/users-friends.component';
+import { UsersFriendsComponent } from './users-friends/users-friends.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +28,8 @@ import { SinglePostComponent } from './single-post/single-post.component';
     LoginComponent,
     SocialFeedComponent,
     AddEntryComponent,
-    SinglePostComponent
-  //  UsersFriendsComponent
+    SinglePostComponent,
+    UsersFriendsComponent
   ],
   imports: [
     BrowserModule,

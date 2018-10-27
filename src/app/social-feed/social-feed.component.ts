@@ -36,7 +36,7 @@ export class SocialFeedComponent implements OnInit {
     const response =  await this.network.request('get', 'posts') as Array<any>;
 
     return response.map(item => new Post({
-      authorId: item.auth_id,
+      authorId: item.author_id,
       content: item.content,
       createdAt: item.created_at
     }));
@@ -48,7 +48,7 @@ export class SocialFeedComponent implements OnInit {
     });
     // alert(entry.content);
     this.posts.push(new Post({
-      authorId: response['auth_id'],
+      authorId: response['author_id'],
       content: response['content'],
       createdAt: response['created_at']
     }));
