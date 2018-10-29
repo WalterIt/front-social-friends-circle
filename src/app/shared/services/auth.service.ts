@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../entities/User';
+import { SocketsService } from './sockets.service';
 
 const BACKEND_DOMAIN = 'http://192.168.99.100';
 const DEFAULT_TOKEN_STORAGE_KEY = 'AUTH_TOKEN';
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(
     private _http : HttpClient,
-    private _router : Router
+    private _router : Router,
+    private _sockets: SocketsService
   ) { }
 
   register(user : User) {
@@ -50,6 +52,8 @@ export class AuthService {
 
   async fetchCurrentUserInfo() {
     try {
+      this._sockets.setupWithToken(this.token);
+
       const response = await this._http.get(this.buildURL('/api/auth/me'), {
         headers: {
           Authorization: `Bearer ${this.token}`

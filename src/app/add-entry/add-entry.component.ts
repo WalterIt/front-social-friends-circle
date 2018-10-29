@@ -30,3 +30,4 @@ export class AddEntryComponent implements OnInit {
 
     this.onClick(this.model);
   }
+}
