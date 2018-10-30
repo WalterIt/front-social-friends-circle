@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { User } from '../shared/entities/User';
+
 import { NetworkService } from '../shared/services/network.service';
 import { AuthService } from '../shared/services/auth.service';
+import { UserService } from '../shared/services/user.service';
 
 
 @Component({
@@ -14,8 +17,9 @@ export class UsersFriendsComponent implements OnInit {
   users : User[];
 
   constructor(
-    private _network: NetworkService,
-    private _auth: AuthService
+    private _network : NetworkService,
+    private _auth : AuthService,
+    private _userService : UserService
   ) { }
 
   async ngOnInit() {
@@ -30,23 +34,14 @@ export class UsersFriendsComponent implements OnInit {
     const users = await this._network.request('get', 'users') as Array<any>;
     const friends = await this._network.request('get', 'users/friends') as Array<any>;
 
-    this.currentUser.friends = friends.map(
-      item => new User(
-        item['firstName'], item['lastName'], item['email'], null, item['id']
-      )
-    );
+    this.currentUser.friends = friends.map(this._userService.deserializeUser);
 
-    // LIST OF USERS EXCEPT OURSELVES
     return users
       .filter(i => i.id !== this.currentUser.id)
-      .map(
-        item => new User(
-          item['firstName'], item['lastName'], item['email'], null, item['id']
-        )
-      );
+      .map(this._userService.deserializeUser);
   }
 
-  async addFriend(user: User) {
+  async addFriend(user : User) {
     const response = await this._network.request(
       'post', `users/${user.id}/add_friend`
     ) as Array<any>;

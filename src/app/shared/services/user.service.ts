@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import toastr from './../../../../node_modules/toastr/toastr';  // "node_modules/toastr/toastr"
+
 import { NetworkService } from './network.service';
-import { SocketsService } from './sockets.service';
+import { SocketsService, FriendAddedEvent, FriendRemovedEvent } from './sockets.service';
 import { AuthService } from './auth.service';
 import { User } from '../entities/User';
 
@@ -9,11 +11,21 @@ import { User } from '../entities/User';
   providedIn: 'root'
 })
 export class UserService {
-  private _cache : any = {};
+  private _cache: any = {};
 
   constructor(
-    private _network : NetworkService
-  ) { }
+    private _network: NetworkService,
+    private _sockets: SocketsService,
+    private _auth: AuthService
+  ) {
+    this._sockets.friendAddedEventFired.subscribe({
+      next: this.handleFriendAddedEvent.bind(this)
+    });
+
+    this._sockets.friendRemovedEventFired.subscribe({
+      next: this.handleFriendRemovedEvent.bind(this)
+    });
+  }
 
   async getUserDetails(id) {
     const cached = this._cache[id];
@@ -32,13 +44,7 @@ export class UserService {
         `users/${id}`
       );
 
-      const user = new User(
-        response['firstName'],
-        response['lastName'],
-        response['email'],
-        null,
-        response['id']
-      );
+      const user = this.deserializeUser(response);
 
       this._cache[id] = {
         user,
@@ -54,5 +60,36 @@ export class UserService {
     };
 
     return fetchPromise;
+  }
+
+  deserializeUser(json) {
+    return new User(
+      json['firstName'],
+      json['lastName'],
+      json['email'],
+      null,
+      json['id']
+    );
+  }
+
+  handleFriendAddedEvent(event: FriendAddedEvent) {
+    const initiator = this.deserializeUser(event.initiator);
+
+    if (!this._auth.currentUser.isFriendOf(initiator)) {
+      this._auth.currentUser.friends.push(initiator);
+      toastr.info(`${initiator.fullName} added you as friend!`);
+    }
+  }
+
+  handleFriendRemovedEvent(event: FriendRemovedEvent) {
+    const initiator = this.deserializeUser(event.initiator);
+
+    if (this._auth.currentUser.isFriendOf(initiator)) {
+      this._auth.currentUser.friends = this._auth.currentUser.friends.filter(
+        user => user.id !== initiator.id
+      );
+
+      toastr.info(`${initiator.fullName} removed you from friends!`);
+    }
   }
 }

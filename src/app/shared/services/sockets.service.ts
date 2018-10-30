@@ -9,7 +9,7 @@ export class PostCreatedEvent {
   author : any;
 }
 
-/*
+
 export class FriendAddedEvent {
   initiator : any;
   friend : any;
@@ -19,7 +19,7 @@ export class FriendRemovedEvent {
   initiator : any;
   friend : any;
 }
-*/
+
 
 
 @Injectable({
@@ -30,6 +30,8 @@ export class SocketsService {
   user: User = null;
 
   public postCreatedEventFired = new EventEmitter<PostCreatedEvent>()
+  public friendAddedEventFired = new EventEmitter<FriendAddedEvent>()
+  public friendRemovedEventFired = new EventEmitter<FriendRemovedEvent>()
 
   setup(token : string, user : User) {
     if (!token || !user) {
@@ -58,6 +60,14 @@ export class SocketsService {
       .listen(
         'PostCreated',
         (event) => this.postCreatedEventFired.emit(event)
+      )
+      .listen(
+        'FriendAdded',
+        (event) => this.friendAddedEventFired.emit(event)
+      )
+      .listen(
+        'FriendRemoved',
+        (event) => this.friendRemovedEventFired.emit(event)
       );
   }
 }
