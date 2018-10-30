@@ -52,8 +52,6 @@ export class AuthService {
 
   async fetchCurrentUserInfo() {
     try {
-      this._sockets.setupWithToken(this.token);
-
       const response = await this._http.get(this.buildURL('/api/auth/me'), {
         headers: {
           Authorization: `Bearer ${this.token}`
@@ -67,6 +65,8 @@ export class AuthService {
         null,
         response['id']
       );
+
+      this._sockets.setup(this.token, this.currentUser);
 
       return this.currentUser;
     } catch (error) {

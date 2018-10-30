@@ -13,6 +13,8 @@ import { ApprRoutingModule } from './appr-routing.module';
 import { AuthService } from './shared/services/auth.service';
 import { NetworkService } from './shared/services/network.service';
 import { SocketsService } from './shared/services/sockets.service';
+import { UserService } from './shared/services/user.service';
+import { PostService } from './shared/services/post.service';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
@@ -45,7 +47,7 @@ import { UsersFriendsComponent } from './users-friends/users-friends.component';
     MatButtonModule,
     NgbModule.forRoot()
   ],
-  providers: [AuthService, NetworkService, SocketsService],
+  providers: [AuthService, NetworkService, SocketsService, UserService, PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/services/auth.service';
+import { PostService } from '../shared/services/post.service';
+
 import { User } from '../shared/entities/User';
-import { NetworkService } from '../shared/services/network.service';
 import { Post } from '../shared/entities/Posts';
 
 @Component({
@@ -17,7 +18,7 @@ export class SocialFeedComponent implements OnInit {
 
   constructor(
     private _auth : AuthService,
-    private _network : NetworkService,
+    private _postService : PostService,
     private _router : Router
   ) { }
 
@@ -26,31 +27,15 @@ export class SocialFeedComponent implements OnInit {
 
     this.currentUser = currentUser;
 
-    this.posts = await this.getPosts();
+    await this._postService.fetchPosts();
+
+    this.posts =  this._postService.posts;
 
     this.addEntry = this.addEntry.bind(this);
   }
 
   async addEntry(entry) {
-    const response = await this._network.request('post', 'posts', {
-      body: entry
-    });
-
-    this.posts.unshift(new Post({
-      authorId: response['author_id'],
-      content: response['content'],
-      createdAt: response['created_at']
-    }));
-  }
-
-  async getPosts() {
-    const response = await this._network.request('get', 'posts') as Array<any>;
-
-    return response.map(item => new Post({
-      authorId: item.author_id,
-      content: item.content,
-      createdAt: item.created_at
-    }));
+    return this._postService.addPost(entry);
   }
 
   async logout() {

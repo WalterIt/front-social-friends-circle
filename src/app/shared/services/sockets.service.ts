@@ -3,12 +3,13 @@ import  Echo  from '../../../../node_modules/laravel-echo';
 
 import { User } from '../entities/User';
 
-/*
+
 export class PostCreatedEvent {
   post : any;
   author : any;
 }
 
+/*
 export class FriendAddedEvent {
   initiator : any;
   friend : any;
@@ -26,13 +27,18 @@ export class FriendRemovedEvent {
 })
 export class SocketsService {
   echo: Echo = null;
+  user: User = null;
 
-  setupWithToken(token) {
-    if (!token) {
+  public postCreatedEventFired = new EventEmitter<PostCreatedEvent>()
+
+  setup(token : string, user : User) {
+    if (!token || !user) {
       this.echo = null;
 
       return;
     }
+
+    this.user = user;
 
     this.echo = new Echo({
       broadcaster: 'socket.io',
@@ -44,17 +50,14 @@ export class SocketsService {
       }
     });
 
-    window['echo'] = this.echo;
-
     this.listen();
   }
 
   listen() {
-    this.echo.private('test-channel')
-      .listen('.test', (e) => {           // callback function
-          console.log(e);
-          alert('Received TEST event via Sockets private, secured channel!');
-      });
+    this.echo.private(`App.User.${this.user.id}`)
+      .listen(
+        'PostCreated',
+        (event) => this.postCreatedEventFired.emit(event)
+      );
   }
-
 }
