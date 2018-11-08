@@ -1,3 +1,7 @@
+VT WEB DEV W/ ANGULAR AND PHP (12h) - 51h 17 min
+https://proquestcombo-safaribooksonline-com.res.banq.qc.ca/video/web-development/9781788394321
+
+
 1 - Clone Laradock inside your PHP project:
 
 git clone https://github.com/Laradock/laradock.git
@@ -8,7 +12,7 @@ cp env-example .env
 
 3 - Run your containers:
 
-docker-compose up -d nginx mysql phpmyadmin workspace 
+docker-compose up -d nginx mysql phpmyadmin workspace
 
 4 - Open your project�s .env file and set the following:
 
@@ -17,15 +21,15 @@ REDIS_HOST=redis
 QUEUE_HOST=beanstalkd
 
 phpadmin solution: https://github.com/laradock/laradock/issues/1694
- My dicision: sudo docker stop $(sudo docker ps -a -q) 
-sudo docker rm $(sudo docker ps -a -q) 
-sudo rm -rf ~/.laradock/data 
-changed latest on 5.7 version in .env MYSQL_VERSION 
-docker-compose up -d nginx mysql phpmyadmin 
+ My dicision: sudo docker stop $(sudo docker ps -a -q)
+sudo docker rm $(sudo docker ps -a -q)
+sudo rm -rf ~/.laradock/data
+changed latest on 5.7 version in .env MYSQL_VERSION
+docker-compose up -d nginx mysql phpmyadmin
 
-login in PhpMyAdmin: 
-server: mysql 
-login: root 
+login in PhpMyAdmin:
+server: mysql
+login: root
 password: root
 
 5 - Open your browser and visit localhost: http://localhost.
@@ -58,7 +62,7 @@ DOCKER_HOST_IP=192.168.99.100
 
 192.168.99.100  laradock
 
-15 - CONFIGURE XDEBUG .env 
+15 - CONFIGURE XDEBUG .env
 
 PHP_FPM_INSTALL_XDEBUG=true
 also workspace  xdebug=true
@@ -119,7 +123,7 @@ Route::get('/', function () {
 23 - INSTALLING ANGULAR
 
 
-24 - FRONTFRIENDS: Creating Register Page 
+24 - FRONTFRIENDS: Creating Register Page
 
 
 30 - BACK-FRIENDS - APIs CREATION
@@ -178,7 +182,7 @@ docker-compose up -d nginx mysql phpmyadmin
             'password' => 'required'
         ];
         $input = $request->only('firstName', 'email', 'password');
-        
+
         $validator = Validator::make($input, $rules);
         if($validator->fails()) {
             return response()->json(['success'=> false, 'error'=> $validator->messages()]);
@@ -195,7 +199,7 @@ docker-compose up -d nginx mysql phpmyadmin
             'email' => $email,
             'password' => Hash::make($password)
         ]);
-        
+
         return response()->json(['success' => true]);
     }
 
@@ -241,7 +245,7 @@ https://packagist.org/packages/barryvdh/laravel-cors
      * @var array
      */
     protected $middleware = [
-            ------------ Add code bellow -- 
+            ------------ Add code bellow --
         \Barryvdh\Cors\HandleCors::class,
     ];
 
@@ -270,7 +274,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 49 - Some Important changes in User.php  app/
 
 
-use Tymon\JWTAuth\Contracts\JWTSubject;  <<== Added 
+use Tymon\JWTAuth\Contracts\JWTSubject;  <<== Added
 
 class User extends Authenticatable !!! implements JWTSubject!!
 
@@ -359,7 +363,7 @@ add
                     ? response()->json(['message' => $exception->getMessage()], 401)
                     : redirect()->guest($exception->redirectTo() ?? route('login'));
     }
- 
+
 
 !!! LOST DATA FROM DATABASE !! ==> set a path in .env  laradock/
 DATA_PATH_HOST=../back-friends/data
@@ -377,11 +381,11 @@ DATA_PATH_HOST=../back-friends/data
 #########################################################################
 
 #phpadmin solution: https://github.com/laradock/laradock/issues/1694
- My dicision: sudo docker stop $(sudo docker ps -a -q) 
-sudo docker rm $(sudo docker ps -a -q) 
-sudo rm -rf ~/.laradock/data 
-changed latest on 5.7 version in .env MYSQL_VERSION 
-docker-compose up -d nginx mysql phpmyadmin 
+ My dicision: sudo docker stop $(sudo docker ps -a -q)
+sudo docker rm $(sudo docker ps -a -q)
+sudo rm -rf ~/.laradock/data
+changed latest on 5.7 version in .env MYSQL_VERSION
+docker-compose up -d nginx mysql phpmyadmin
 
 ########################################################################
 
@@ -416,7 +420,7 @@ Created Migration: 2018_10_26_192119_create_posts_table
 54 - ADDING RELATIONSHIP TO USER.PHP
 
 55 - CREATING CONTROLLER AND MODEL AT THE SAME TIME:
-root@588944be3429:/var/www# 
+root@588944be3429:/var/www#
 php artisan make:controller PostController --resource --model=Post
 Controller created successfully.
 
@@ -425,7 +429,7 @@ root@588944be3429:/var/www# php artisan migrate
 Migrating: 2018_10_26_192119_create_posts_table
 Migrated:  2018_10_26_192119_create_posts_table
 
-56 - 
+56 -
 root@588944be3429:/var/www# php artisan migrate:rollback
 Rolling back: 2018_10_26_192119_create_posts_table
 Rolled back:  2018_10_26_192119_create_posts_table
@@ -547,7 +551,7 @@ http://192.168.99.100/api/users/2/add_friend
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/back-friends (user)
 $ git commit -m'Updated DB design | Created Users-Friends Route | Made New Migration | Created Relationship Users-Friends'
- 
+
 $ git push
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/back-friends (dev)
@@ -578,9 +582,9 @@ $ git push
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/back-friends (dev)
 $ git merge user
- 
- 
-docker-compose up -d nginx mysql phpmyadmin workspace 
+
+
+docker-compose up -d nginx mysql phpmyadmin workspace
 
 docker-compose exec workspace bash
 
@@ -606,7 +610,7 @@ $ git push
 
 Users/wshir/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/laradock
 
-docker-compose up -d nginx mysql phpmyadmin workspace  
+docker-compose up -d nginx mysql phpmyadmin workspace
 
 
 
@@ -632,7 +636,7 @@ IP = ???
 
 root@588944be3429:/var/www# php artisan queue:listen
 
-192.168.99.100  
+192.168.99.100
 
 172.27.0.4
 
@@ -684,7 +688,7 @@ Broadcast::channel('test-channel', function () {
 });
 
 
-7 - root@588944be3429:/var/www# 
+7 - root@588944be3429:/var/www#
 composer require predis/predis
 
 
@@ -747,7 +751,7 @@ FRONTFRIENDS
   <script type="text/javascript" src="http://192.168.99.100:6001/socket.io/socket.io.js"></script>
 
 
-2 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)ROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)$ 
+2 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)ROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)$
 
 npm add laravel-echo --save
 
@@ -768,7 +772,7 @@ Error: Package "laravel-echo" was found but does not support schematics.
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)$ npm install -g laravel-echo-server
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friendsone is installed. You must install peer dependencies yourself. (Websockets)                                                                            e is installed. You must install peer dependencies yourself.
-$ npm add laravel-echo 
+$ npm add laravel-echo
 
 wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)
 $ ng g service sockets
@@ -819,7 +823,7 @@ $ git push --set-upstream origin Websockets
 ##########################################################################33
 HANDLING NOTIFICATIONS OF NEW CONTENT
 
-1 -  In app/Providers     EventServiceProvider.php  
+1 -  In app/Providers     EventServiceProvider.php
 
     protected $listen = [
         'App\Events\PostCreated' => [
@@ -859,7 +863,7 @@ FRONTEND
 
 host: 'http://192.168.99.100:6001',
 
-2 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends/src/app/shared/services (Websockets)$ 
+2 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends/src/app/shared/services (Websockets)$
 
 ng g service user --flat
 
@@ -869,7 +873,7 @@ ng g service user --flat
 
 5 - ng g service post
 
-6 - TEST ALL modifications: 
+6 - TEST ALL modifications:
 
 root@09ac4a880a91:/var/www# php artisan queue:work
 
@@ -891,7 +895,7 @@ Getting Friends Notifications in Real-Time
 
 1- Changes in:
 
-EventServiceProvider - 
+EventServiceProvider -
     protected $listen = [
         'App\Events\PostCreated' => [
             'App\Listeners\PostCreatedListener'
@@ -922,13 +926,13 @@ EventServiceProvider -
   -----------------------------------------------
   FRONTEND
 
-1 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)ROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)$ 
+1 - wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)ROJECTS/LARADOCKS_PROJECTS/front-friends (Websockets)$
 
 npm install toastr --save
 
 2 - styles.scss   import code
 
-@import "node_modules/bootstrap/scss/utilities"; 
+@import "node_modules/bootstrap/scss/utilities";
 
 after :
 @import "node_modules/toastr/toastr";
@@ -946,14 +950,18 @@ after :
 
 ---------------------------------------
 
+
+wshir@DESKTOP-MTMVSEK MINGW64 ~/Documents/DOCKERPROJECTS/LARADOCKS_PROJECTS/laradock (Websockets)
+$ docker-compose up -d laravel-echo-server mysql nginx
+
 4 - root@09ac4a880a91:/var/www# php artisan queue:work
 
 5 - TEST
- 
+
 
  node_modules\toastr\toastr.js
 
-#Toastr NOT WORKIN :warning:  
+#Toastr NOT WORKIN :warning:
 :smile: SOLUTION SEARCH ==>  https://www.npmjs.com/package/toastr
 
 removed import from styles.scss and add in index.html :
